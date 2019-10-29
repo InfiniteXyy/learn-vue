@@ -21,8 +21,18 @@ function withCodeHelper(element) {
   var innerHtml = window.list["#" + element.firstElementChild.id];
   element.addEventListener("click", function(e) {
     activeCode = innerHtml;
+    activate(element);
     update();
   });
+}
+
+function activate(element) {
+  var el = document.querySelector(".active");
+  while (el) {
+    el.classList.remove("active");
+    el = document.querySelector(".active");
+  }
+  element.classList.add("active");
 }
 
 document.querySelectorAll(".container").forEach(withCodeHelper);

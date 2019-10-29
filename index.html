@@ -1,0 +1,222 @@
+<html>
+
+<head>
+    <title>hello-vue</title>
+    <link href="./styles.css" rel="stylesheet">
+    <link href="./vendor/github.css" rel="stylesheet">
+    <script src="./vendor/highlight.pack.js"></script>
+    <script src="./vendor/vue.js"></script>
+    <script src="./utils/vue-inject.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="basic">
+            <div class="comment">// 基本模版 </div>
+            <h3>Hello {{name}}</h3>
+        </div>
+        <script>
+            new Vue({
+                el: "#basic",
+                data: {
+                    name: "xyy"
+                }
+            })
+        </script>
+    </div>
+    <div class="container">
+        <div id="model-bind">
+            <div class="comment">// Vue重写了data中所有属性的set方法，且绑定了input的onchange方法 </div>
+            <div class="horizontal">
+                <input v-model="name" placeholder="你的名字">
+                <h3>Your name is <span underline>{{name}}</span></h3>
+            </div>
+        </div>
+        <script>
+            new Vue({
+                el: "#model-bind",
+                data: {
+                    name: "xyy"
+                }
+            })
+        </script>
+    </div>
+
+    <div class="container">
+        <div id="life-cycle">
+            <div class="comment">// 组件数据绑定 => 组件挂载 => 解绑组件</div>
+            <h3>{{output}}</h3>
+        </div>
+        <script>
+            new Vue({
+                el: "#life-cycle",
+                data: {
+                    output: "init"
+                },
+                created() {
+                    this.output += ` / created(el=${this.$el})`
+                },
+                mounted() {
+                    this.output += ` / mounted(el=${this.$el})`
+                },
+                beforeDistroy() {
+                    this.output += " / beforeDistroy"
+                }
+            })
+        </script>
+    </div>
+
+    <div class="container">
+        <div id="template">
+            <div class="comment">// 高级模版</div>
+            <div>
+                <p v-pre>{{ignored}}</p>
+                <p v-html="htmlValue"></p>
+                <p>表达式求值 {{value}} / 2 = {{value / 2}}</p>
+                <p>三元表达式 {{boolValue ? "isTrue" : "isFalse"}}</p>
+                <p>iife {{(num => num + 1)(value)}}</p>
+                <p>过滤器 {{stringValue | padLeft(2) | trailingComma}}</p>
+            </div>
+        </div>
+        <script>
+            new Vue({
+                el: "#template",
+                data: {
+                    value: 10,
+                    boolValue: false,
+                    stringValue: "i am xyy",
+                    htmlValue: "<code>htmlValue</code>"
+                },
+                filters: {
+                    padLeft(value, count, filler = "*") {
+                        return new Array(count).fill(filler).join("") + value
+                    },
+                    trailingComma(value) {
+                        return value + ";"
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div class="container">
+        <div id="directive">
+            <div class="comment">// 指令</div>
+            <div>
+                <p v-pre>{{ignored}}</p>
+                <label>
+                    boolValue
+                    <input type="checkbox" v-model="boolValue">
+                </label>
+                <p v-if="boolValue">visible if boolValue is true</p>
+                <p v-bind:class="boolValue && 'warning'">警告信息</p>
+                <p :class="{ warning: boolValue }">语法糖 + class对象</p>
+                <div class="horizontal">
+                    <button v-on:click="add">add {{value}}</button>
+                    <button @click="() => {value--}">minus {{value}}</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            new Vue({
+                el: "#directive",
+                data: {
+                    value: 1,
+                    boolValue: true,
+                },
+                methods: {
+                    add() {
+                        this.value++
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div class="container">
+        <div id="computed">
+            <div class="comment">// 计算属性</div>
+            <div>
+                <label>
+                    输入数字
+                    <input v-model="value" type="number">
+                </label>
+                <label>
+                    输入结果
+                    <input v-model="computedValue" type="number">
+                </label>
+                <h3 v-html="computedValueText"></h3>
+            </div>
+        </div>
+        <script>
+            new Vue({
+                el: "#computed",
+                data: {
+                    value: 1,
+                },
+                computed: {
+                    computedValue: {
+                        get() {
+                            return Math.round(this.value * this.value)
+                        },
+                        set(result) {
+                            this.value = Math.sqrt(result)
+                        }
+                    },
+                    computedValueText() {
+                        // 依赖计算属性的计算属性
+                        return `${this.value}<sup>2</sup> = ${this.computedValue}`
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div class="container">
+        <div v-cloak id="advanced-directive">
+            <div class="comment">// 高级指令</div>
+            <p v-once>只渲染一次value = {{value}}</p>
+            <button @click="() => value++">{{value}}</button>
+            <div v-if="value % 2 == 0">
+                <span>打开devtool看看：重复元素不会渲染</span>
+                <b>v-if 偶数</b>
+            </div>
+            <div v-else>
+                <span>打开devtool看看：重复元素不会渲染</span>
+                <b>v-else 奇数</b>
+            </div>
+            <div v-show="value % 2 == 0">v-show=false只会把元素设置成display: none</div>
+
+        </div>
+
+        <style>
+            [v-cloak] {
+                /* 放在根结点上可以防止闪烁，当Vue下载完成后会自动删除这个属性 */
+                display: none;
+            }
+        </style>
+
+        <script>
+            new Vue({
+                el: "#advanced-directive",
+                data: {
+                    value: 1,
+                },
+            })
+        </script>
+    </div>
+
+
+
+    <div class="card">
+        <div id="close-btn">
+            <img srcset="./vendor/keyboard-left-arrow-button.svg" alt="My logo">
+        </div>
+        <pre><code class="xml" id="code-preview"></code></pre>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify-html.min.js"></script>
+    <script src="./utils/helper.js"></script>
+
+</body>
+
+</html>

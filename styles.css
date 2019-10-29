@@ -1,0 +1,71 @@
+.horizontal {
+  display: flex;
+  align-items: center;
+}
+
+* {
+  color: #4a4a4a;
+  font-family: sans-serif;
+}
+
+.warning {
+  color: orangered;
+}
+
+div.comment {
+  color: #9b9b9b;
+  margin-bottom: 10px;
+}
+
+span.underline {
+  border-bottom: 0.15rem solid #1a1a1a;
+}
+
+div.container {
+  padding: 1rem 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+pre {
+  margin: 0;
+}
+code * {
+  font-family: menlo, monospace;
+}
+
+.card {
+  transition: 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: fixed;
+  width: 500px;
+  top: 16px;
+  right: -500px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px 0 #e0e4e7, inset -1px 0 0 0 rgba(224, 227, 231, 0.3),
+    inset 0 -1px 0 0 #e0e4e7, inset 1px 0 0 0 rgba(224, 227, 231, 0.2);
+}
+
+.card.visible {
+  transform: translateX(-516px);
+}
+
+.card.card.visible > #close-btn {
+  transform: rotate(180deg);
+}
+#close-btn {
+  position: absolute;
+  left: -50px;
+  color: #8b8b8b;
+  cursor: pointer;
+  background-color: white;
+  padding: 8px;
+  font-size: 120%;
+  border: 2px solid #8b8b8b;
+}
+
+#close-btn > img {
+  height: 1em;
+  width: 1em;
+  color: inherit;
+  font-family: monospace;
+  font-weight: bold;
+}

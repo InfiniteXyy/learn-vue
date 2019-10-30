@@ -82,6 +82,21 @@ code * {
   width: 1em;
 }
 
+#projects p {
+  font-size: 18px;
+}
+
+#projects p a {
+  border-bottom: 0.25rem solid #1a1a1a;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+#projects p a:hover {
+  color: white;
+  background-color: #1a1a1a;
+}
+
 @media only screen and (min-width: 700px) {
   .card {
     width: 500px;
@@ -94,7 +109,7 @@ code * {
   }
   #close-btn {
     transition: right 300ms cubic-bezier(0.165, 0.84, 0.44, 1);
-    top: 8px;
+    top: 16px;
     right: 16px;
   }
   .card.visible + #close-btn {

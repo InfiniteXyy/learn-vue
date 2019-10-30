@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>hello-vue</title>
     <link href="./styles.css" rel="stylesheet">
-    <link href="./vendor/github.css" rel="stylesheet">
-    <script src="./vendor/highlight.pack.js"></script>
     <script src="./vendor/vue.js"></script>
     <script src="./utils/vue-inject.js"></script>
 </head>
@@ -30,7 +28,7 @@
     </div>
     <div class="container">
         <div id="model-bind">
-            <div class="comment">// Vue重写了data中所有属性的set方法，且绑定了input的onchange方法 </div>
+            <div class="comment">// 双向绑定 </div>
             <div class="horizontal">
                 <input v-model="name" placeholder="你的名字">
                 <h3>Your name is <span class="underline">{{name}}</span></h3>
@@ -48,7 +46,7 @@
 
     <div class="container">
         <div id="life-cycle">
-            <div class="comment">// 组件数据绑定 => 组件挂载 => 解绑组件</div>
+            <div class="comment">// 生命周期：组件数据绑定 => 组件挂载 => 解绑组件</div>
             <h3>{{output}}</h3>
         </div>
         <script>
@@ -183,14 +181,14 @@
     <div class="container">
         <div v-cloak id="advanced-directive">
             <div class="comment">// 高级指令</div>
-            <p v-once>只渲染一次value = {{value}}</p>
+            <p v-once>只渲染一次value（初始值） = {{value}}</p>
             <button @click="() => value++">{{value}}</button>
             <div v-if="value % 2 == 0">
-                <span>打开devtool看看：重复元素不会渲染</span>
+                <span>打开devtool看看：这个重复元素没有渲染</span>
                 <b>v-if 偶数</b>
             </div>
             <div v-else>
-                <span>打开devtool看看：重复元素不会渲染</span>
+                <span>打开devtool看看：这个重复元素没有渲染</span>
                 <b>v-else 奇数</b>
             </div>
             <div v-show="value % 2 == 0">v-show=false只会把元素设置成display: none</div>
@@ -227,17 +225,47 @@
         </script>
     </div>
 
+    <div class="container">
+        <div id="event">
+            <div class="comment">// 事件</div>
+            <h1>{{ value }}</h1>
+            <button @click="onAdd()">add 1</button>
+            <button @click="onAdd(10)">add 10</button>
+            <button @click="onAdd">add event</button>
+            <div>
+                <button style="margin-top: 10px;" @click.left="onAdd()" @click.right.prevent="onAdd(10)">修饰器按钮</button>
+            </div>
+        </div>
+        <script>
+            new Vue({
+                el: "#event",
+                data: {
+                    value: 1,
+                },
+                methods: {
+                    onAdd(count = 1) {
+                        // @click直接写函数，会传入event
+                        this.value += count
+                    }
+                }
+            })
+        </script>
+    </div>
+
+    <div class="container" disable-active>
+        <div class="comment">// 项目</div>
+        <div id="projects">
+            <p>为了巩固这些基础知识，做了一些实战项目。</p>
+            <p>首先是<a href="./projects/market">购物车项目</a>, 使用了经典的html/js/css结构，和基本的Vue功能</p>
+        </div>
+    </div>
 
 
-    <div class="card">
-        <pre><code class="xml" id="code-preview"></code></pre>
-    </div>
-    <div id="close-btn">
-        <img src="./assets/keyboard-left-arrow-button.svg" alt="left icon">
-    </div>
+    <div id="preview-plugin"></div>
+    <link href="./vendor/github.css" rel="stylesheet">
+    <script src="./vendor/highlight.pack.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify-html.min.js"></script>
     <script src="./utils/helper.js"></script>
-
 </body>
 
 </html>

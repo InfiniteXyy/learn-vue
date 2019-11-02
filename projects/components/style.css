@@ -1,0 +1,28 @@
+.tabs {
+}
+
+.tabs-bar {
+  display: flex;
+  padding: 10px;
+  border: 1px solid #eeeeee;
+  margin-bottom: 10px;
+}
+
+.tabs-tab {
+  margin-right: 10px;
+  color: #9b9b9b;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.tabs-tab.active {
+  margin-right: 10px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.tabs-container {
+  width: 100%;
+}

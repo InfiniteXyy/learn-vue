@@ -20,6 +20,10 @@ input {
   font-family: sans-serif;
 }
 
+p {
+  line-height: 2;
+}
+
 .warning {
   color: orangered;
 }
@@ -30,7 +34,8 @@ div.comment {
 }
 
 div.active div.comment {
-  color: #8b81c3;
+  color: rgb(233, 23, 23);
+  font-weight: bold;
 }
 
 span.underline {

@@ -9,10 +9,15 @@
 }
 
 .tabs-tab {
+  display: flex;
   margin-right: 10px;
   color: #9b9b9b;
   font-size: 18px;
   cursor: pointer;
+}
+
+.tabs-tab > a {
+  margin-left: 10px;
 }
 
 .tabs-tab.active {
@@ -24,5 +29,18 @@
 }
 
 .tabs-container {
+  position: relative;
   width: 100%;
+}
+
+.tabs-container > * {
+  top: 0;
+  position: absolute;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }

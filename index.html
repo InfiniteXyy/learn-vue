@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -9,317 +8,328 @@
     <link href="./styles.css" rel="stylesheet" />
     <script src="./vendor/vue.js"></script>
     <script src="./utils/vue-inject.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <div id="basic">
-            <div class="comment">// 基本模版</div>
-            <h3>Hello {{ name }}</h3>
-        </div>
-        <script>
-            new Vue({
-                el: "#basic",
-                data() {
-                    return { name: "xyy" }
-                }
-            });
-        </script>
+      <div id="basic">
+        <div class="comment">// 基本模版</div>
+        <h3>Hello {{ name }}</h3>
+      </div>
+      <script>
+        new Vue({
+          el: '#basic',
+          data() {
+            return { name: 'xyy' };
+          },
+        });
+      </script>
     </div>
     <div class="container">
-        <div id="model-bind">
-            <div class="comment">// 双向绑定</div>
-            <div class="horizontal">
-                <input v-model="name" placeholder="你的名字" />
-                <h3>
-                    Your name is <span class="underline">{{ name }}</span>
-                </h3>
-            </div>
-            <input v-model.lazy="name" placeholder="修饰符lazy" />
-            <input @input="e => name = e.target.value" :value="name" placeholder="手动绑定" />
+      <div id="model-bind">
+        <div class="comment">// 双向绑定</div>
+        <div class="horizontal">
+          <input v-model="name" placeholder="你的名字" />
+          <h3>Your name is <span class="underline">{{ name }}</span></h3>
         </div>
-        <script>
-            new Vue({
-                el: "#model-bind",
-                data() {
-                    return { name: "" }
-                }
-            });
-        </script>
-    </div>
-
-    <div class="container">
-        <div id="life-cycle">
-            <div class="comment">
-                // 生命周期：组件数据绑定 => 组件挂载 => 解绑组件
-            </div>
-            <h3>{{ output }}</h3>
-        </div>
-        <script>
-            new Vue({
-                el: "#life-cycle",
-                data() {
-                    return { output: "init" }
-                },
-                created() {
-                    this.output += ` / created(el=${this.$el})`;
-                },
-                mounted() {
-                    this.output += ` / mounted(el=${this.$el})`;
-                },
-                beforeDistroy() {
-                    this.output += " / beforeDistroy";
-                }
-            });
-        </script>
+        <input v-model.lazy="name" placeholder="修饰符lazy" />
+        <input
+          @input="e => name = e.target.value"
+          :value="name"
+          placeholder="手动绑定"
+        />
+      </div>
+      <script>
+        new Vue({
+          el: '#model-bind',
+          data() {
+            return { name: '' };
+          },
+        });
+      </script>
     </div>
 
     <div class="container">
-        <div id="template">
-            <div class="comment">// 高级模版</div>
-            <div>
-                <p v-pre>{{ ignored }}</p>
-                <p v-html="htmlValue"></p>
-                <p>表达式求值 {{ value }} / 2 = {{ value / 2 }}</p>
-                <p>三元表达式 {{ boolValue ? "isTrue" : "isFalse" }}</p>
-                <p>iife {{(num => num + 1)(value)}}</p>
-                <p>过滤器 {{stringValue | padLeft(2) | trailingComma}}</p>
-            </div>
+      <div id="life-cycle">
+        <div class="comment">
+          // 生命周期：组件数据绑定 => 组件挂载 => 解绑组件
         </div>
-        <script>
-            new Vue({
-                el: "#template",
-                data() {
-                    return {
-                        value: 10,
-                        boolValue: false,
-                        stringValue: "i am xyy",
-                        htmlValue: "<h3>htmlValue</h3>"
-                    }
-                },
-                filters: {
-                    padLeft(value, count, filler = "*") {
-                        return new Array(count).fill(filler).join("") + value;
-                    },
-                    trailingComma(value) {
-                        return value + ";";
-                    }
-                }
-            });
-        </script>
+        <h3>{{ output }}</h3>
+      </div>
+      <script>
+        new Vue({
+          el: '#life-cycle',
+          data() {
+            return { output: 'init' };
+          },
+          created() {
+            this.output += ` / created(el=${this.$el})`;
+          },
+          mounted() {
+            this.output += ` / mounted(el=${this.$el})`;
+          },
+          beforeDistroy() {
+            this.output += ' / beforeDistroy';
+          },
+        });
+      </script>
     </div>
 
     <div class="container">
-        <div id="directive">
-            <div class="comment">// 指令</div>
-            <div>
-                <p v-pre>{{ ignored }}</p>
-                <label>
-                    boolValue
-                    <input type="checkbox" v-model="boolValue" />
-                </label>
-                <p v-if="boolValue">visible if boolValue is true</p>
-                <p v-bind:class="boolValue && 'warning'">警告信息</p>
-                <p :class="{ warning: boolValue }">语法糖 + class对象</p>
-                <div class="horizontal">
-                    <button v-on:click="add">add {{ value }}</button>
-                    <button @click="() => {value--}">minus {{ value }}</button>
-                </div>
-                <ul>
-                    <li v-for="(item, index) of arrayValue">
-                        {{ index + 1 }} - {{ item }}
-                    </li>
-                </ul>
-            </div>
+      <div id="template">
+        <div class="comment">// 高级模版</div>
+        <div>
+          <p v-pre>{{ ignored }}</p>
+          <p v-html="htmlValue"></p>
+          <p>表达式求值 {{ value }} / 2 = {{ value / 2 }}</p>
+          <p>三元表达式 {{ boolValue ? "isTrue" : "isFalse" }}</p>
+          <p>iife {{(num => num + 1)(value)}}</p>
+          <p>过滤器 {{stringValue | padLeft(2) | trailingComma}}</p>
         </div>
-        <script>
-            new Vue({
-                el: "#directive",
-                data() {
-                    return {
-                        value: 1,
-                        boolValue: true,
-                        arrayValue: ["React", "Vue", "Angular"]
-                    }
-                },
-                methods: {
-                    add() {
-                        this.value++;
-                    }
-                }
-            });
-        </script>
-    </div>
-
-    <div class="container">
-        <div id="computed">
-            <div class="comment">// 计算属性</div>
-            <div>
-                <label>
-                    输入数字
-                    <input v-model.number="value" type="number" />
-                </label>
-                <label>
-                    输入结果
-                    <input v-model.number="computedValue" type="number" />
-                </label>
-                <h3 v-html="computedValueText"></h3>
-            </div>
-        </div>
-        <script>
-            new Vue({
-                el: "#computed",
-                data() {
-                    return { value: 1 }
-                },
-                computed: {
-                    computedValue: {
-                        get() {
-                            return Math.round(this.value * this.value);
-                        },
-                        set(result) {
-                            this.value = Math.sqrt(result);
-                        }
-                    },
-                    computedValueText() {
-                        // 依赖计算属性的计算属性
-                        return `${this.value}<sup>2</sup> = ${this.computedValue}`;
-                    }
-                }
-            });
-        </script>
-    </div>
-
-    <div class="container">
-        <div v-cloak id="advanced-directive">
-            <div class="comment">// 高级指令</div>
-            <p v-once>只渲染一次value（初始值） = {{ value }}</p>
-            <button @click="() => value++">{{ value }}</button>
-            <div v-if="value % 2 == 0">
-                <span>打开devtool看看：这个重复元素没有渲染</span>
-                <b>v-if 偶数</b>
-            </div>
-            <div v-else>
-                <span>打开devtool看看：这个重复元素没有渲染</span>
-                <b>v-else 奇数</b>
-            </div>
-            <div v-show="value % 2 == 0">
-                v-show=false只会把元素设置成display: none
-            </div>
-            <ul>
-                <li v-for="(count, index) of arrayValue" @click="add(index)">
-                    点我 {{ count }}
-                </li>
-            </ul>
-        </div>
-
-        <style>
-            [v-cloak] {
-                /* 放在根结点上可以防止闪烁，当Vue下载完成后会自动删除这个属性 */
-                display: none;
-            }
-        </style>
-
-        <script>
-            new Vue({
-                el: "#advanced-directive",
-                data() {
-                    return {
-                        value: 1,
-                        arrayValue: [0, 0, 0]
-                    }
-                },
-                methods: {
-                    add(id) {
-                        // 直接修改 array[index] 不会被注意到
-                        // this.$set(this.arrayValue, index, this.arrayValue[index] + 1)
-                        // 或者使用 immutable，由于vdom的存在，不会有性能问题
-                        this.arrayValue = this.arrayValue.map((count, index) => {
-                            return index === id ? count + 1 : count;
-                        });
-                    }
-                }
-            });
-        </script>
-    </div>
-
-    <div class="container">
-        <div id="event">
-            <div class="comment">// 事件</div>
-            <h1>{{ value }}</h1>
-            <button @click="onAdd()">add 1</button>
-            <button @click="onAdd(10)">add 10</button>
-            <button @click="onAdd">add event</button>
-            <div>
-                <button style="margin-top: 10px;" @click.left="onAdd()" @click.right.prevent="onAdd(10)">
-                    修饰器按钮
-                </button>
-            </div>
-        </div>
-        <script>
-            new Vue({
-                el: "#event",
-                data() {
-                    return { value: 1 }
-                },
-                methods: {
-                    onAdd(count = 1, event) {
-                        this.value += count;
-                    }
-                }
-            });
-        </script>
-    </div>
-
-    <div class="container">
-        <div id="component">
-            <div class="comment">// 组件</div>
-            <local-component></local-component>
-            <global-component screen-title="来自父组件的标题"></global-component>
-            <global-component></global-component>
-        </div>
-        <script>
-            const localComponent = {
-                template: `<p>局部组件（counter）</p>`
-                // 可以使用data，methods等所有属性
+      </div>
+      <script>
+        new Vue({
+          el: '#template',
+          data() {
+            return {
+              value: 10,
+              boolValue: false,
+              stringValue: 'i am xyy',
+              htmlValue: '<h3>htmlValue</h3>',
             };
-            Vue.component("global-component", {
-                template: `
+          },
+          filters: {
+            padLeft(value, count, filler = '*') {
+              return new Array(count).fill(filler).join('') + value;
+            },
+            trailingComma(value) {
+              return value + ';';
+            },
+          },
+        });
+      </script>
+    </div>
+
+    <div class="container">
+      <div id="directive">
+        <div class="comment">// 指令</div>
+        <div>
+          <p v-pre>{{ ignored }}</p>
+          <label>
+            boolValue
+            <input type="checkbox" v-model="boolValue" />
+          </label>
+          <p v-if="boolValue">visible if boolValue is true</p>
+          <p v-bind:class="boolValue && 'warning'">警告信息</p>
+          <p :class="{ warning: boolValue }">语法糖 + class对象</p>
+          <div class="horizontal">
+            <button v-on:click="add">add {{ value }}</button>
+            <button @click="() => {value--}">minus {{ value }}</button>
+          </div>
+          <ul>
+            <li v-for="(item, index) of arrayValue">
+              {{ index + 1 }} - {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#directive',
+          data() {
+            return {
+              value: 1,
+              boolValue: true,
+              arrayValue: ['React', 'Vue', 'Angular'],
+            };
+          },
+          methods: {
+            add() {
+              this.value++;
+            },
+          },
+        });
+      </script>
+    </div>
+
+    <div class="container">
+      <div id="computed">
+        <div class="comment">// 计算属性</div>
+        <div>
+          <label>
+            输入数字
+            <input v-model.number="value" type="number" />
+          </label>
+          <label>
+            输入结果
+            <input v-model.number="computedValue" type="number" />
+          </label>
+          <h3 v-html="computedValueText"></h3>
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#computed',
+          data() {
+            return { value: 1 };
+          },
+          computed: {
+            computedValue: {
+              get() {
+                return Math.round(this.value * this.value);
+              },
+              set(result) {
+                this.value = Math.sqrt(result);
+              },
+            },
+            computedValueText() {
+              // 依赖计算属性的计算属性
+              return `${this.value}<sup>2</sup> = ${this.computedValue}`;
+            },
+          },
+        });
+      </script>
+    </div>
+
+    <div class="container">
+      <div v-cloak id="advanced-directive">
+        <div class="comment">// 高级指令</div>
+        <p v-once>只渲染一次value（初始值） = {{ value }}</p>
+        <button @click="() => value++">{{ value }}</button>
+        <div v-if="value % 2 == 0">
+          <span>打开devtool看看：这个重复元素没有渲染</span>
+          <b>v-if 偶数</b>
+        </div>
+        <div v-else>
+          <span>打开devtool看看：这个重复元素没有渲染</span>
+          <b>v-else 奇数</b>
+        </div>
+        <div v-show="value % 2 == 0">
+          v-show=false只会把元素设置成display: none
+        </div>
+        <ul>
+          <li v-for="(count, index) of arrayValue" @click="add(index)">
+            点我 {{ count }}
+          </li>
+        </ul>
+      </div>
+
+      <style>
+        [v-cloak] {
+          /* 放在根结点上可以防止闪烁，当Vue下载完成后会自动删除这个属性 */
+          display: none;
+        }
+      </style>
+
+      <script>
+        new Vue({
+          el: '#advanced-directive',
+          data() {
+            return {
+              value: 1,
+              arrayValue: [0, 0, 0],
+            };
+          },
+          methods: {
+            add(id) {
+              // 直接修改 array[index] 不会被注意到
+              // this.$set(this.arrayValue, index, this.arrayValue[index] + 1)
+              // 或者使用 immutable，由于vdom的存在，不会有性能问题
+              this.arrayValue = this.arrayValue.map((count, index) => {
+                return index === id ? count + 1 : count;
+              });
+            },
+          },
+        });
+      </script>
+    </div>
+
+    <div class="container">
+      <div id="event">
+        <div class="comment">// 事件</div>
+        <h1>{{ value }}</h1>
+        <button @click="onAdd()">add 1</button>
+        <button @click="onAdd(10)">add 10</button>
+        <button @click="onAdd">add event</button>
+        <div>
+          <button
+            style="margin-top: 10px;"
+            @click.left="onAdd()"
+            @click.right.prevent="onAdd(10)"
+          >
+            修饰器按钮
+          </button>
+        </div>
+      </div>
+      <script>
+        new Vue({
+          el: '#event',
+          data() {
+            return { value: 1 };
+          },
+          methods: {
+            onAdd(count = 1, event) {
+              this.value += count;
+            },
+          },
+        });
+      </script>
+    </div>
+
+    <div class="container">
+      <div id="component">
+        <div class="comment">// 组件</div>
+        <local-component></local-component>
+        <global-component screen-title="来自父组件的标题"></global-component>
+        <global-component></global-component>
+      </div>
+      <script>
+        const localComponent = {
+          template: `<p>局部组件（counter）</p>`,
+          // 可以使用data，methods等所有属性
+        };
+        Vue.component('global-component', {
+          template: `
                     <div>
                         <p>全局组件（header）</p>
                         <b> ** {{screenTitle}} ** </b>
                     </div>
                 `,
-                // 驼峰命名
-                props: {
-                    screenTitle: {
-                        type: String,
-                        default: "默认标题"
-                    }
-                }
-            });
-            new Vue({
-                el: "#component",
-                components: {
-                    "local-component": localComponent
-                }
-            });
-        </script>
+          // 驼峰命名
+          props: {
+            screenTitle: {
+              type: String,
+              default: '默认标题',
+            },
+          },
+        });
+        new Vue({
+          el: '#component',
+          components: {
+            'local-component': localComponent,
+          },
+        });
+      </script>
     </div>
 
     <div class="container">
-        <div id="advanced-component">
-            <div class="comment">// 组件通信</div>
-            <button @click="() => $refs.child.message = '修改了'">
-                通过ref修改子组件
-            </button>
-            <local-component :father-count="value" @add="handleAdd" :on-add="handleAdd" ref="child">
-            </local-component>
-        </div>
-        <script>
-            const bus = new Vue();
-            const advancedComponent = {
-                template: `
+      <div id="advanced-component">
+        <div class="comment">// 组件通信</div>
+        <button @click="() => $refs.child.message = '修改了'">
+          通过ref修改子组件
+        </button>
+        <local-component
+          :father-count="value"
+          @add="handleAdd"
+          :on-add="handleAdd"
+          ref="child"
+        >
+        </local-component>
+      </div>
+      <script>
+        const bus = new Vue();
+        const advancedComponent = {
+          template: `
                     <div>
                         <h3>{{ message }}</h3>
                         <b>{{ fatherCount }}</b>
@@ -328,65 +338,65 @@
                         <button @click="onAdd(-1)">通过回调函数(vue中不推荐)</button>
                     </div>
                 `,
-                props: {
-                    fatherCount: {
-                        type: Number,
-                        required: true
-                    },
-                    onAdd: {
-                        type: Function,
-                        required: true
-                    }
-                },
-                data() {
-                    return {
-                        message: "这是内部信息"
-                    };
-                },
-                methods: {
-                    emitAdd() {
-                        this.$emit("add");
-                    },
-                    handleBusAdd() {
-                        bus.$emit("on-add");
-                    }
-                }
+          props: {
+            fatherCount: {
+              type: Number,
+              required: true,
+            },
+            onAdd: {
+              type: Function,
+              required: true,
+            },
+          },
+          data() {
+            return {
+              message: '这是内部信息',
             };
-            new Vue({
-                el: "#advanced-component",
-                components: {
-                    "local-component": advancedComponent
-                },
-                data() {
-                    return { value: 0 }
-                },
-                methods: {
-                    handleAdd(number = 1) {
-                        this.value += number;
-                    }
-                },
-                mounted() {
-                    bus.$on("on-add", () => {
-                        this.value += 1;
-                    });
-                }
+          },
+          methods: {
+            emitAdd() {
+              this.$emit('add');
+            },
+            handleBusAdd() {
+              bus.$emit('on-add');
+            },
+          },
+        };
+        new Vue({
+          el: '#advanced-component',
+          components: {
+            'local-component': advancedComponent,
+          },
+          data() {
+            return { value: 0 };
+          },
+          methods: {
+            handleAdd(number = 1) {
+              this.value += number;
+            },
+          },
+          mounted() {
+            bus.$on('on-add', () => {
+              this.value += 1;
             });
-        </script>
+          },
+        });
+      </script>
     </div>
 
     <div class="container">
-        <div id="component-slot">
-            <div class="comment">// 组件插槽</div>
-            <slot-component>
-                <h3 slot="title">父组件替换具名slot</h3>
-                <ul slot="container" slot-scope="props">
-                    <li v-for="item in props.items">父组件{{ item }}</li>
-                </ul>
-            </slot-component>
-        </div>
-        <script>
-            const slotComponent = {
-                template: `
+      <div id="component-slot">
+        <div class="comment">// 组件插槽</div>
+        <slot-component>
+          <h3 slot="title">父组件替换具名slot</h3>
+          <ul slot="container" slot-scope="props">
+            <li v-for="item in props.items">父组件{{ item }}</li>
+          </ul>
+        </slot-component>
+      </div>
+      <script>
+        const slotComponent = {
+          template: `
                 <div>
                     <slot name="title">子组件默认具名slot</slot>
                     <slot name="container" :items="[1,2,3]">
@@ -395,86 +405,120 @@
                         </ul>
                     </slot>
                 </div>
-                `
-            };
-            new Vue({
-                el: "#component-slot",
-                components: {
-                    "slot-component": slotComponent
-                }
-            });
-        </script>
+                `,
+        };
+        new Vue({
+          el: '#component-slot',
+          components: {
+            'slot-component': slotComponent,
+          },
+        });
+      </script>
     </div>
 
     <div class="container">
-        <div id="advanced-component-2">
-            <div class="comment">// 高级组件</div>
-            <component :is="activeComponent">
-                <button @click="toggleComponent" slot="toggle">切换</button>
-            </component>
-            <script type="text/x-template" id="simple-component">
-                <div>
-                    <b>简单组件</b>
-                    <slot name="toggle"></slot>
-                </div>
-            </script>
-
-        </div>
-        <script>
-            const simpleComponent = {
-                template: "#simple-component"
-            };
-            const asyncComponent = function (resolve, reject) {
-                setTimeout(function () {
-                    // 向 `resolve` 回调传递组件定义
-                    resolve({
-                        template: `
-                            <div>
-                                I am async!
-                                <slot name="toggle"></slot>
-                            </div>
-                            `
-                    });
-                }, 1000);
-            };
-
-            new Vue({
-                el: "#advanced-component-2",
-                components: {
-                    "async-component": asyncComponent,
-                    "simple-component": simpleComponent
-                },
-                data() {
-                    return {
-                        activeComponent: "simple-component"
-                    };
-                },
-                methods: {
-                    toggleComponent() {
-                        if (this.activeComponent === "simple-component") {
-                            this.activeComponent = "async-component";
-                        } else {
-                            this.activeComponent = "simple-component";
-                        }
-                    }
-                }
-            });
+      <div id="advanced-component-2">
+        <div class="comment">// 高级组件</div>
+        <component :is="activeComponent">
+          <button @click="toggleComponent" slot="toggle">切换</button>
+        </component>
+        <script type="text/x-template" id="simple-component">
+          <div>
+              <b>简单组件</b>
+              <slot name="toggle"></slot>
+          </div>
         </script>
+      </div>
+      <script>
+        const simpleComponent = {
+          template: '#simple-component',
+        };
+        const asyncComponent = function(resolve, reject) {
+          setTimeout(function() {
+            // 向 `resolve` 回调传递组件定义
+            resolve({
+              template: `
+              <div>
+                I am async!
+                <slot name="toggle"></slot>
+              </div>
+                            `,
+            });
+          }, 1000);
+        };
+
+        new Vue({
+          el: '#advanced-component-2',
+          components: {
+            'async-component': asyncComponent,
+            'simple-component': simpleComponent,
+          },
+          data() {
+            return {
+              activeComponent: 'simple-component',
+            };
+          },
+          methods: {
+            toggleComponent() {
+              if (this.activeComponent === 'simple-component') {
+                this.activeComponent = 'async-component';
+              } else {
+                this.activeComponent = 'simple-component';
+              }
+            },
+          },
+        });
+      </script>
+    </div>
+
+    <div class="container">
+      <div id="custom-directive">
+        <div class="comment">// 自定义指令</div>
+        <input v-focus />
+        <button>点击后聚焦</button>
+      </div>
+      <script>
+        new Vue({
+          el: '#custom-directive',
+          data() {
+            return {
+              value: 0,
+              booleanValue: false,
+            };
+          },
+          directives: {
+            focus: {
+              inserted(el) {
+                el.focus();
+              },
+            },
+          },
+        });
+      </script>
     </div>
 
     <div class="container" disable-active>
-        <div class="comment">// 项目</div>
-        <div id="projects">
-            <p>为了巩固这些基础知识，做了一些实战项目。</p>
-            <p>
-                首先是<a href="./projects/market">购物车项目</a>,
-                使用了经典的html/js/css结构，和基本的Vue功能
-            </p>
-            <p>
-                第二个项目是<a href="./projects/components">常用组件的封装</a>,
-                使用了组件、插槽、自定义v-model、动态组件等技术
-            </p>
-        </div>
+      <div class="comment">// 项目</div>
+      <div id="projects">
+        <p>为了巩固这些基础知识，做了一些实战项目。</p>
+        <p>
+          首先是<a href="./projects/market">购物车项目</a>,
+          使用了经典的html/js/css结构，和基本的Vue功能
+        </p>
+        <p>
+          第二个项目是<a href="./projects/components">常用组件的封装</a>,
+          使用了组件、插槽、自定义v-model、动态组件等技术
+        </p>
+        <p>
+          第三个项目是<a href="./projects/chatroom"
+            >和elizabot聊天(developing)</a
+          >, 手动配置webpack打包成SPA
+        </p>
+        <p>
+          第四个项目是<a href="./projects/chatroom">点菜吧(developing)</a>,
+          使用vue-router和vuex和scss
+        </p>
+      </div>
     </div>
 
     <div id="preview-plugin"></div>
@@ -482,6 +526,5 @@
     <script src="./vendor/highlight.pack.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify-html.min.js"></script>
     <script src="./utils/helper.js"></script>
-</body>
-
+  </body>
 </html>

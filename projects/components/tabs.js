@@ -1,9 +1,11 @@
 Vue.component("tab-pane", {
   // language=Vue
   template: `
-        <div v-show="show">
-            <slot></slot>
-        </div>
+    <transition name="fade">
+      <div v-if="show">
+        <slot></slot>
+      </div>
+    </transition>
     `,
   props: {
     label: {
@@ -13,6 +15,10 @@ Vue.component("tab-pane", {
     name: {
       type: String,
       required: true
+    },
+    closeable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -27,9 +33,13 @@ Vue.component("tabs", {
   template: `
         <div class="tabs">
             <div class="tabs-bar">
-                <div v-for="nav of navList" :class="{'tabs-tab': true, 'active': nav.name === currentValue}"
-                     @click="handleChange(nav.name)">
+                <div v-for="nav of navList" :class="{'tabs-tab': true, 'active': nav.name === currentValue}">
+                  <div @click="handleChange(nav.name)">
                     {{ nav.label }}
+                  </div>
+                  <a v-if="nav.closeable">
+                    x
+                  </a>
                 </div>
             </div>
             <div class="tabs-container">
@@ -55,13 +65,17 @@ Vue.component("tabs", {
     updateNav() {
       this.navList = this.getTabs().map(i => ({
         name: i.name,
-        label: i.label
+        label: i.label,
+        closeable: i.closeable
       }));
       this.updateStatus();
     },
     handleChange(name) {
       this.currentValue = name;
-    }
+      this.$emit("input", name);
+      this.$emit("on-change", name);
+    },
+    handleClose(name) {}
   },
   data() {
     return {
@@ -72,11 +86,13 @@ Vue.component("tabs", {
   watch: {
     currentValue(val) {
       this.updateNav();
+    },
+    value(val) {
+      this.currentValue = val;
     }
   },
 
   mounted() {
-    console.log(this.getTabs());
     this.updateNav();
   }
 });

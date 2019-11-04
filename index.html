@@ -475,7 +475,6 @@
       <div id="custom-directive">
         <div class="comment">// 自定义指令</div>
         <input v-focus />
-        <button>点击后聚焦</button>
       </div>
       <script>
         new Vue({
@@ -489,7 +488,8 @@
           directives: {
             focus: {
               inserted(el) {
-                el.focus();
+                // el.focus();
+                console.log('v-focus is working!');
               },
             },
           },
@@ -510,13 +510,14 @@
           使用了组件、插槽、自定义v-model、动态组件等技术
         </p>
         <p>
-          第三个项目是<a href="./projects/chatroom"
-            >和elizabot聊天(developing)</a
-          >, 手动配置webpack打包成SPA
+          第三个项目是<a href="./projects/chatroom">和elizabot聊天</a>,
+          手动配置webpack打包成SPA
         </p>
         <p>
-          第四个项目是<a href="./projects/chatroom">点菜吧(developing)</a>,
-          使用vue-router和vuex和scss
+          第四个项目是<a href="https://infinitexyy.github.io/latecode/"
+            >LateCode(developing)</a
+          >, 使用vue-cli, element-ui, vue-router,
+          vuex和scss，ui设计模仿Leetcode，是一个"自己出题目自己完成"的网站，在这里挖个坑QwQ
         </p>
       </div>
     </div>
